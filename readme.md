@@ -24,8 +24,7 @@ Free Space                                  18.18 GB
 
 ### Tasks
 
- - calculate disk size (configure root when launching)
- - define categories (need to consider which to use)
+ - operating system recognition (categories are currently hardcoded for Windows)
+ - improve categories (need to consider how to examine other files)
  - option to render in pie chart and other ways
  - full test coverage
- - render progress bar of size calculations in terminal
