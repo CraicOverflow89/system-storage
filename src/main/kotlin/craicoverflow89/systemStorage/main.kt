@@ -1,5 +1,12 @@
 package craicoverflow89.systemStorage
 
+import kotlin.system.exitProcess
+
 fun main() {
-    SystemStorageReader("C:").read()?.print()
+
+    // Read System
+    val result = SystemStorageReader("J:").read() ?: exitProcess(1)
+
+    // Print Result
+    result.print()
 }
