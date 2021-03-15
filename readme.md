@@ -25,6 +25,7 @@ Free Space                                  18.18 GB
 ### Tasks
 
  - operating system recognition (categories are currently hardcoded for Windows)
+ - consider what Operating System includes (eg: System32 and other things?)
  - consider available drives (command line arg? prompt and read line?)
  - improve categories (need to consider how to examine other files)
  - option to render in pie chart and other ways (frame with string source)
