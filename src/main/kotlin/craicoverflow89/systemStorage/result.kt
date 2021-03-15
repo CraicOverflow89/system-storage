@@ -12,6 +12,8 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
         this.append("]")
     }.toString()
 
+    private fun createTitle() = javaClass.getResource("/title").readText().split("\n")
+
     fun print() = ArrayList<String>().apply {
 
         // Padding Logic
@@ -32,7 +34,8 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
         val bytesAsGB = {value: Long -> value / 1024 / 1024 / 1024}
 
         // Print Content
-        this.add("System Storage")
+        //this.add("System Storage")
+        this.addAll(createTitle())
         this.add("")
         this.add(createBar())
         this.add("")
