@@ -34,7 +34,7 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
         val bytesAsGB = {value: Long -> value / 1024 / 1024 / 1024}
 
         // Print Content
-        //this.add("System Storage")
+        this.add("")
         this.addAll(createTitle())
         this.add("")
         this.add(createBar())
