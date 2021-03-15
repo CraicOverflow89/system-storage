@@ -12,30 +12,32 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
         this.append("]")
     }.toString()
 
-    private fun createTitle() = javaClass.getResource("/title").readText().split("\n")
-
     fun print() = ArrayList<String>().apply {
 
         // Render Logic
         val lineBreak = {this.add("")}
-        val bytesAsGB = {value: Long -> value / 1024 / 1024 / 1024}
-        val padName = {value: String -> String.format("%-37s", value)}
-        val padSize = {value: String -> String.format("%10s", value)}
-        val categoryLine = {name: String, size: Long -> "${padName(name)}  ${padSize(bytesAsGB(size).toString())} GB"}
+        val categoryLine = {
+            val bytesAsGB = {value: Long -> value / 1024.0 / 1024.0 / 1024.0}
+            val padName = {value: String -> String.format("%-37s", value)}
+            val padSize = {value: Double -> String.format("%10.2f", value)}
+            {name: String, size: Long -> "${padName(name)}  ${padSize(bytesAsGB(size))} GB"}
+        }()
 
         // Create Content
         lineBreak()
-        this.addAll(createTitle())
-        lineBreak()
         this.add(createBar())
         lineBreak()
-        this.add(categoryLine("Total", driveTotal))
+        this.add(categoryLine("Total Space", driveTotal))
         lineBreak()
         this.addAll(categoryData.map {
             categoryLine(it.name, it.size)
         })
+        // NOTE: Other Files could be a category in the result object
+        this.add(categoryLine("Other Files", driveTotal - driveUsable - categoryData.fold(0L) {size, data ->
+            size + data.size
+        }))
         lineBreak()
-        this.add(categoryLine("Free", driveUsable))
+        this.add(categoryLine("Free Space", driveUsable))
     }.forEach {
         println(it)
     }
