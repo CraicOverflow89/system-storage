@@ -16,36 +16,26 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
 
     fun print() = ArrayList<String>().apply {
 
-        // Padding Logic
-        /*val padName = {value: String -> String.format("%-${categoryData.map {
-            it.name.length
-        }.fold(10) {
-                total, length -> if(length > total) length else total
-        }}s", value)}*/
-        //val padSizeLength = 10
-        // NOTE: this could be the largest amount of digits that are being shown
-        //val padSize = {value: String -> String.format("%${padSizeLength}s", value)}
-
-        // NOTE: just doing absolute lengths regardless of category names for now
+        // Render Logic
+        val lineBreak = {this.add("")}
+        val bytesAsGB = {value: Long -> value / 1024 / 1024 / 1024}
         val padName = {value: String -> String.format("%-37s", value)}
         val padSize = {value: String -> String.format("%10s", value)}
+        val categoryLine = {name: String, size: Long -> "${padName(name)}  ${padSize(bytesAsGB(size).toString())} GB"}
 
-        // Conversion Logic
-        val bytesAsGB = {value: Long -> value / 1024 / 1024 / 1024}
-
-        // Print Content
-        this.add("")
+        // Create Content
+        lineBreak()
         this.addAll(createTitle())
-        this.add("")
+        lineBreak()
         this.add(createBar())
-        this.add("")
-        this.add("${padName("Total")}  ${padSize(bytesAsGB(driveTotal).toString())} GB")
-        this.add("")
+        lineBreak()
+        this.add(categoryLine("Total", driveTotal))
+        lineBreak()
         this.addAll(categoryData.map {
-            "${padName(it.name)}  ${padSize(bytesAsGB(it.size).toString())} GB"
+            categoryLine(it.name, it.size)
         })
-        this.add("")
-        this.add("${padName("Free")}  ${padSize(bytesAsGB(driveUsable).toString())} GB")
+        lineBreak()
+        this.add(categoryLine("Free", driveUsable))
     }.forEach {
         println(it)
     }
