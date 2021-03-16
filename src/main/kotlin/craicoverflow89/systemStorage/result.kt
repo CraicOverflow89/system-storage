@@ -18,8 +18,8 @@ class SystemStorageResult(private val driveTotal: Long, private val driveUsable:
         val lineBreak = {this.add("")}
         val categoryLine = {
             val bytesAsGB = {value: Long -> value / 1024.0 / 1024.0 / 1024.0}
-            val padName = {value: String -> String.format("%-37s", value)}
-            val padSize = {value: Double -> String.format("%10.2f", value)}
+            val padName = {value: String -> String.format("%-32s", value)}
+            val padSize = {value: Double -> String.format("%15.2f", value)}
             {name: String, size: Long -> "${padName(name)}  ${padSize(bytesAsGB(size))} GB"}
         }()
 
