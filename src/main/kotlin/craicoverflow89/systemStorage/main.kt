@@ -22,7 +22,7 @@ class SystemStorageTitle {
 
         fun print() {
             println("")
-            javaClass.getResource("/title").readText().split("\n").forEach {
+            SystemStorageTitle::class.java.getResource("/title").readText().split("\n").forEach {
                 println(it)
             }
             println("")
